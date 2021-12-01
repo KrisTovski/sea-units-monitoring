@@ -1,5 +1,5 @@
 
-package com.kristovski.monitorowaniejednostekmorskich.model;
+package com.kristovski.monitorowaniejednostekmorskich.seaunits;
 
 import java.util.HashMap;
 import java.util.Map;

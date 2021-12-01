@@ -1,4 +1,4 @@
-package com.kristovski.monitorowaniejednostekmorskich.model;
+package com.kristovski.monitorowaniejednostekmorskich.seaunits;
 
 public class Point {
 

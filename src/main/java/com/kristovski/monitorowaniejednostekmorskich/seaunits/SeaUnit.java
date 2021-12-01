@@ -1,5 +1,5 @@
 
-package com.kristovski.monitorowaniejednostekmorskich.model;
+package com.kristovski.monitorowaniejednostekmorskich.seaunits;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "d"
 })
 @Generated("jsonschema2pojo")
-public class Track {
+public class SeaUnit {
 
     @JsonProperty("timeStamp")
     private String timeStamp;
