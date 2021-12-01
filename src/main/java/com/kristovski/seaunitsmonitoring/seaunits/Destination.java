@@ -1,5 +1,5 @@
 
-package com.kristovski.monitorowaniejednostekmorskich.seaunits;
+package com.kristovski.seaunitsmonitoring.seaunits;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,37 +14,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "type",
-    "coordinates"
+    "data"
 })
 @Generated("jsonschema2pojo")
-public class Geometry {
+public class Destination {
 
-    @JsonProperty("type")
-    private String type;
-    @JsonProperty("coordinates")
-    private List<Double> coordinates = null;
+    @JsonProperty("data")
+    private List<Datum> data = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("type")
-    public String getType() {
-        return type;
+    @JsonProperty("data")
+    public List<Datum> getData() {
+        return data;
     }
 
-    @JsonProperty("type")
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @JsonProperty("coordinates")
-    public List<Double> getCoordinates() {
-        return coordinates;
-    }
-
-    @JsonProperty("coordinates")
-    public void setCoordinates(List<Double> coordinates) {
-        this.coordinates = coordinates;
+    @JsonProperty("data")
+    public void setData(List<Datum> data) {
+        this.data = data;
     }
 
     @JsonAnyGetter

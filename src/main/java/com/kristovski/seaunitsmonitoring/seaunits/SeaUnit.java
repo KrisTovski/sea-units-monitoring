@@ -1,5 +1,5 @@
 
-package com.kristovski.monitorowaniejednostekmorskich.seaunits;
+package com.kristovski.seaunitsmonitoring.seaunits;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -303,4 +303,31 @@ public class SeaUnit {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "SeaUnit{" +
+                "timeStamp='" + timeStamp + '\'' +
+                ", sog=" + sog +
+                ", rot=" + rot +
+                ", navstat=" + navstat +
+                ", mmsi=" + mmsi +
+                ", cog=" + cog +
+                ", geometry=" + geometry +
+                ", shipType=" + shipType +
+                ", name='" + name + '\'' +
+                ", imo=" + imo +
+                ", callsign='" + callsign + '\'' +
+                ", country='" + country + '\'' +
+                ", eta='" + eta + '\'' +
+                ", destination='" + destination + '\'' +
+                ", isSurvey=" + isSurvey +
+                ", heading=" + heading +
+                ", draught=" + draught +
+                ", a=" + a +
+                ", b=" + b +
+                ", c=" + c +
+                ", d=" + d +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }

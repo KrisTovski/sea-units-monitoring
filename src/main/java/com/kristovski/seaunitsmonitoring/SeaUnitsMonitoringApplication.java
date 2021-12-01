@@ -1,13 +1,13 @@
-package com.kristovski.monitorowaniejednostekmorskich;
+package com.kristovski.seaunitsmonitoring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MonitorowanieJednostekMorskichApplication {
+public class SeaUnitsMonitoringApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MonitorowanieJednostekMorskichApplication.class, args);
+        SpringApplication.run(SeaUnitsMonitoringApplication.class, args);
     }
 
 }
