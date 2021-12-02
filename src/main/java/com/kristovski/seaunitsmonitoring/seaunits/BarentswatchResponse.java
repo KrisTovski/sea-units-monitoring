@@ -1,4 +1,4 @@
-package com.kristovski.seaunitsmonitoring.utils;
+package com.kristovski.seaunitsmonitoring.seaunits;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

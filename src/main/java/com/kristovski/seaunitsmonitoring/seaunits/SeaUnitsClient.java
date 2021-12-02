@@ -1,13 +1,13 @@
 package com.kristovski.seaunitsmonitoring.seaunits;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.kristovski.seaunitsmonitoring.utils.BarentswatchResponse;
+import com.kristovski.seaunitsmonitoring.utils.Token;
+import com.kristovski.seaunitsmonitoring.utils.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
@@ -25,11 +25,11 @@ public class SeaUnitsClient {
     private static final String CLIENT_ID_VALUE = "kfilak@onet.eu:kris";
     private static final String CLIENT_SECRET_VALUE = "BarentsPassWatch";
 
-    private final UtilsRepository utilsRepository;
+    private final TokenRepository tokenRepository;
 
     @Autowired
-    public SeaUnitsClient(UtilsRepository utilsRepository) {
-        this.utilsRepository = utilsRepository;
+    public SeaUnitsClient(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
     }
 
     RestTemplate restTemplate = new RestTemplate();
@@ -50,25 +50,14 @@ public class SeaUnitsClient {
             callPostForAccessToken();
         }
 
-
         httpHeaders.add("Authorization", "Bearer " + barentswatch_api_key);
 
-        ResponseEntity<SeaUnit[]> exchange = null;
-        try {
-            exchange = restTemplate.exchange(
-                    BARENTSWATCH_URL + "Xmin={xmin}&Xmax={xmax}&Ymin={ymin}&Ymax={ymax}",
-                    HttpMethod.GET,
-                    httpEntity,
-                    SeaUnit[].class,
-                    xmin, xmax, ymin, ymax);
-        } catch (HttpClientErrorException e) {
-            HttpStatus statusCode = exchange.getStatusCode();
-            if (statusCode != HttpStatus.NOT_FOUND) {
-                throw e;
-            }
-        }
-        return exchange;
-
+        return restTemplate.exchange(
+                BARENTSWATCH_URL + "Xmin={xmin}&Xmax={xmax}&Ymin={ymin}&Ymax={ymax}",
+                HttpMethod.GET,
+                httpEntity,
+                SeaUnit[].class,
+                xmin, xmax, ymin, ymax);
     }
 
     public Datum getDestination(String destinationName) {
@@ -89,7 +78,7 @@ public class SeaUnitsClient {
         token.setCreateTime(LocalDateTime.now());
         String barentswatch_api_key = callPostForAccessToken();
         token.setAccessToken(barentswatch_api_key);
-        utilsRepository.save(token);
+        tokenRepository.save(token);
     }
 
     private String callPostForAccessToken() {
@@ -122,7 +111,7 @@ public class SeaUnitsClient {
     }
 
     private Token getLatestToken() {
-        List<Token> tokens = utilsRepository.findAll();
+        List<Token> tokens = tokenRepository.findAll();
         if (!tokens.isEmpty()) {
             return tokens.stream().max(Comparator.comparingLong(Token::getId)).orElseThrow(NoSuchElementException::new);
         }

@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title>Sea Units Monitoring</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
@@ -12,23 +12,26 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
-    <style>#map {
-        height: 600px;
-        width: 1080px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;}
-    </style>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
-    <select name="UnitType">
-        <option th:each="unit : ${UnitType}"
-                th:value="${unit}" th:text="${unit.value}"></option>
-    </select>
+
+
 
 </head>
 <body>
 
 <div id="map"></div>
+<form th:action="@{/app}" th:method="Get">
+    Choose Unit Track
+    <select name="unitType">
+        <option th:each="typeOption : ${T(com.kristovski.seaunitsmonitoring.seaunits.UnitType).values()}"
+                th:value="${typeOption.value}"
+                th:text="${typeOption.valueName}"></option>
+
+    </select>
+    <button type="submit" >Submit</button>
+</form>
+
 
 <script th:inline="javascript">
     var map = L.map('map').setView([63.285, 9.872], 8);
@@ -46,19 +49,18 @@
         L.marker([value.x, value.y]).addTo(map)
             .bindPopup(value.name)
             .openPopup()
-        .on('mouseover', () => {
-            polygon = L.polygon([
-                [value.x, value.y],
-                [value.destinationX, value.destinationY]
-            ]).addTo(map);
-        })
-        .on('mouseout', () => {
-            map.removeLayer(polygon)
-        })
+            .on('mouseover', () => {
+                polygon = L.polygon([
+                    [value.x, value.y],
+                    [value.destinationX, value.destinationY]
+                ]).addTo(map);
+            })
+            .on('mouseout', () => {
+                map.removeLayer(polygon)
+            })
 
         ;
     })
-
 
 
 </script>
