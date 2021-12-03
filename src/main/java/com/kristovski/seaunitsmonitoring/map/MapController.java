@@ -26,10 +26,9 @@ public class MapController {
     @GetMapping(value = {"/app", "/app?unitType={value}"})
     public String getMap(@RequestParam(required = false) Map<String, String> params, Model model) {
 
-        String value = null;
-        for (Map.Entry<String, String> stringStringEntry : params.entrySet()) {
-            value = stringStringEntry.getValue();
-        }
+        String value = params.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .findFirst().orElse("");
 
         log.info("UnitType number: " + value);
 
