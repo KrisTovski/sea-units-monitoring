@@ -18,7 +18,6 @@ import java.util.NoSuchElementException;
 
 @Component
 public class WebClient {
-    //  private static final String BARENTSWATCH_API_KEY = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjBCM0I1NEUyRkQ5OUZCQkY5NzVERDMxNDBDREQ4OEI1QzA5RkFDRjMiLCJ0eXAiOiJhdCtqd3QiLCJ4NXQiOiJDenRVNHYyWi03LVhYZE1VRE4ySXRjQ2ZyUE0ifQ.eyJuYmYiOjE2MzgzNjkxMTksImV4cCI6MTYzODM3MjcxOSwiaXNzIjoiaHR0cHM6Ly9pZC5iYXJlbnRzd2F0Y2gubm8iLCJhdWQiOiJhcGkiLCJjbGllbnRfaWQiOiJrZmlsYWtAb25ldC5ldTprcmlzIiwic2NvcGUiOlsiYXBpIl19.RSFJBwtXPpg6YyORe0Z6ws9dXC0MbEfMaeaWmxkenJtX6icookhLkh4v1Ofa1n3i3Lg_8S5ADG5RHU36zb3tl1zariCY3rrRNOiMR3J_H_he09Jx3hH7avMm7-GJiqf9GO4nEPk7LV78b0K2ruJ4HwyLEXBnI3AgZJ9Xg5KqLtdaryQ2XVH8K-Refhxv6GRqNuuuhmQbcUpPvFPUY7of5hSsSUAn5kJqpw18lybefHR5msSBKZv3e9rQ-00m6mEwpEFlaMG4fG226BiQfV0y4OBI6DUpbiBkeAPpSmtFvQqS_aj9Az4JJlAbBKyCxvaBz8OMGdjXI32tTvA6AAvFeYVYldfnrjw6c2rgXdMjUJItAT9RcT25h_AGWnORfwLm-w3ZUbffDoJTTJ66gsc1z0D7JBeMSoix7UdJgLEMInGWXgwT_uhGTThOjO2hS3UatiNc4HQvtHoAP6BTVBOaaJ1AgXtsNN4IDf5dhnRy_pRoapMqoW-vW7I5fX4e8lPVA7zIV3sbAMpGJ--KrN47J96IvaYvs-hVdXNewmE3EKpEZkGS66nECy6tctan65Xfa4s8FD7YKjxO2BKt6Qo76fC7kjcHQhyjArXK2QQ3sLFBZQWBzluepGamJekCfPwYsY28m9yS-pcvz4fiEodvaB2kdh9ney5daPgZVbeFXdw";
     private static final String BARENTSWATCH_URL = "https://www.barentswatch.no/bwapi/v2/geodata/ais/openpositions?";
     private static final String POSITIONSTACK_URL = "http://api.positionstack.com/v1/forward?access_key=";
     private static final String POSITIONSTACK_ACCESS_KEY = "92c1223f14409f05d863a7e6b25ad0f8";
@@ -65,7 +64,7 @@ public class WebClient {
     public ResponseEntity<WeatherConditions> getWeatherForPosition(double lat, double lon) {
 
         return restTemplate.exchange(
-                WEATHER_URL + "weather?lat={lat}&lon={lon}&appid={API key}&units=metric&lang=pl",
+                WEATHER_URL + "weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units=metric&lang=en",
                 HttpMethod.GET,
                 new HttpEntity<>(new HttpHeaders()),
                 WeatherConditions.class,
@@ -108,9 +107,7 @@ public class WebClient {
 
         BarentswatchResponse barentswatchResponse = restTemplate.postForObject("https://id.barentswatch.no/connect/token", httpEntity, BarentswatchResponse.class);
 
-        String access_token = barentswatchResponse.getAccess_token();
-
-        return access_token;
+        return barentswatchResponse.getAccess_token();
     }
 
     private boolean isTokenExpired() {

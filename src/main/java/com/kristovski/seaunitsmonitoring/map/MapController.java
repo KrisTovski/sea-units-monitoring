@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 @Slf4j
 public class MapController {
 
-    private static final int DEFAULT_UNIT_TYPE_MILITARY = 35;
     private final SeaUnitService seaUnitService;
 
     @Autowired
@@ -33,9 +32,9 @@ public class MapController {
         log.info("UnitType number: " + value);
 
         if (isNumeric(value)) {
-            model.addAttribute("seaUnits", seaUnitService.getSeaUnits(Integer.parseInt(value)));
+            model.addAttribute("seaUnits", seaUnitService.getSeaUnitsByType(Integer.parseInt(value)));
         } else {
-            model.addAttribute("seaUnits", seaUnitService.getSeaUnits(DEFAULT_UNIT_TYPE_MILITARY));
+            model.addAttribute("seaUnits", seaUnitService.getSeaUnits());
         }
         return "map";
     }

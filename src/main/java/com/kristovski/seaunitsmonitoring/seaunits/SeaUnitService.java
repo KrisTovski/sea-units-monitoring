@@ -27,41 +27,45 @@ public class SeaUnitService {
     private static final double Y_MIN = 63.10;
     private static final double Y_MAX = 64.10;
 
-    public List<SeaUnitPoint> getSeaUnits(int unitType) {
+    public List<SeaUnitPoint> getSeaUnits() {
         ResponseEntity<SeaUnit[]> response = webClient.getSeaUnitsForGivenAreaWithDestination(X_MIN, X_MAX, Y_MIN, Y_MAX);
 
+        List<SeaUnitPoint> collect = Stream.of(Objects.requireNonNull(response.getBody()))
+                .map(this::apply).collect(Collectors.toList());
 
-        List<SeaUnitPoint> collect = Stream.of(response.getBody())
-                .filter(seaUnit -> seaUnit.getShipType().equals(unitType))
-                .map(seaUnit -> {
-                    Double lat = seaUnit.getGeometry().getCoordinates().get(0);
-                    Double lon = seaUnit.getGeometry().getCoordinates().get(1);
-
-                    ResponseEntity<WeatherConditions> weatherForPositionResponse = webClient.getWeatherForPosition(lat, lon);
-
-                    Weather weather = Objects.requireNonNull(weatherForPositionResponse.getBody()).getWeather().get(0);
-
-                    return new SeaUnitPoint(
-                            lat,
-                            lon,
-                            seaUnit.getMmsi(),
-                            seaUnit.getName(),
-                            seaUnit.getShipType(),
-                            webClient.getDestination(seaUnit.getDestination()).getLongitude(),
-                            webClient.getDestination(seaUnit.getDestination()).getLatitude(),
-                            weatherForPositionResponse.getBody().getMain().getTemp(),
-                            weatherForPositionResponse.getBody().getWind().getSpeed(),
-                            weather.getDescription(),
-                            weather.getIcon()
-
-                    );
-                }).collect(Collectors.toList());
-
-        log.info(collect.toString());
+        log.info("Get Sea Units: " + collect);
         return collect;
-
-
     }
 
+    public List<SeaUnitPoint> getSeaUnitsByType(int unitType) {
+        ResponseEntity<SeaUnit[]> response = webClient.getSeaUnitsForGivenAreaWithDestination(X_MIN, X_MAX, Y_MIN, Y_MAX);
 
+        List<SeaUnitPoint> collect = Stream.of(Objects.requireNonNull(response.getBody()))
+                .filter(seaUnit -> seaUnit.getShipType().equals(unitType))
+                .map(this::apply).collect(Collectors.toList());
+
+        log.info("Get Sea Units By Type: " + collect);
+        return collect;
+    }
+
+    private SeaUnitPoint apply(SeaUnit seaUnit) {
+        Double lat = seaUnit.getGeometry().getCoordinates().get(0);
+        Double lon = seaUnit.getGeometry().getCoordinates().get(1);
+        ResponseEntity<WeatherConditions> weatherForPositionResponse = webClient.getWeatherForPosition(lat, lon);
+        Weather weather = Objects.requireNonNull(weatherForPositionResponse.getBody()).getWeather().get(0);
+
+        return new SeaUnitPoint(
+                lat,
+                lon,
+                seaUnit.getMmsi(),
+                seaUnit.getName(),
+                seaUnit.getShipType(),
+                webClient.getDestination(seaUnit.getDestination()).getLongitude(),
+                webClient.getDestination(seaUnit.getDestination()).getLatitude(),
+                weatherForPositionResponse.getBody().getMain().getTemp(),
+                weatherForPositionResponse.getBody().getWind().getSpeed(),
+                weather.getDescription(),
+                weather.getIcon()
+        );
+    }
 }

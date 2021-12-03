@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Sea Units Monitoring</title>
-
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
-
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -18,27 +20,35 @@
 </head>
 <body>
 <nav class="navbar">
-    <a href="#" th:href="@{/app}" class="logo" alt="logo">
+    <a href="#" th:href="@{/app}" class="logo">
         <i class="fas fa-ship"></i>
-
     </a>
     Sea Unit Monitoring
 </nav>
-<div class="container">
-    <div>
-        <form th:action="@{/app}" th:method="Get">
-            Choose Unit Track
-            <select name="unitType">
-                <option th:each="typeOption : ${T(com.kristovski.seaunitsmonitoring.seaunits.UnitType).values()}"
-                        th:value="${typeOption.value}"
-                        th:text="${typeOption.valueName}"></option>
+<div class="container pt-3">
+    <div class="row " >
+        <div class="col-md-2" >
+            <form th:action="@{/app}" th:method="Get">
+                Choose Unit Track
+                <select name="unitType">
+                    <option th:each="typeOption : ${T(com.kristovski.seaunitsmonitoring.seaunits.UnitType).values()}"
+                            th:value="${typeOption.value}"
+                            th:text="${typeOption.valueName}"></option>
 
-            </select>
-            <button type="submit">Submit</button>
-        </form>
+                </select>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-10">
+            <div id="map"></div>
+        </div>
     </div>
-    <div id="map"></div>
 </div>
+<footer class="footer-custom">
+
+    <a th:href="@{https://github.com/KrisTovski}" th:target="_blank"><i class="fab fa-github fa-2x" style=" vertical-align: middle;"></i></a>
+    <a target="_blank" href="https://icons8.com/icon/15615/viking-ship">Viking Ship</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+</footer>
 
 
 <script th:inline="javascript">
@@ -74,8 +84,11 @@
         }).addTo(map)
             .bindPopup(
                 value.name + " mmsi: " + value.mmsi +"<br>"+
-                "<br>Weather conditions: <br>" +
-                "wind speed: " + value.windSpeed + "m/s"
+                "<br>Weather conditions:" +
+                "<br>Temp: " + value.temp + "℉" +
+                "<br>Wind speed: " + value.windSpeed + "m/s" +
+                "<br>" + value.description +
+                "<br><img src='http://openweathermap.org/img/wn/"+value.icon+".png'>"
             )
             .openPopup()
             .on('mouseover', () => {
@@ -90,8 +103,6 @@
 
         ;
     })
-
-
 </script>
 
 </body>
