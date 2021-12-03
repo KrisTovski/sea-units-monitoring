@@ -1,5 +1,6 @@
 package com.kristovski.seaunitsmonitoring.seaunits;
 
+import com.kristovski.seaunitsmonitoring.openweather.model.Weather;
 import com.kristovski.seaunitsmonitoring.openweather.model.WeatherConditions;
 import com.kristovski.seaunitsmonitoring.webclient.SeaUnitPoint;
 import com.kristovski.seaunitsmonitoring.webclient.WebClient;
@@ -8,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,7 +38,9 @@ public class SeaUnitService {
                     Double lon = seaUnit.getGeometry().getCoordinates().get(1);
 
                     ResponseEntity<WeatherConditions> weatherForPositionResponse = webClient.getWeatherForPosition(lat, lon);
-                    
+
+                    Weather weather = Objects.requireNonNull(weatherForPositionResponse.getBody()).getWeather().get(0);
+
                     return new SeaUnitPoint(
                             lat,
                             lon,
@@ -44,8 +49,12 @@ public class SeaUnitService {
                             seaUnit.getShipType(),
                             webClient.getDestination(seaUnit.getDestination()).getLongitude(),
                             webClient.getDestination(seaUnit.getDestination()).getLatitude(),
-                            weatherForPositionResponse.getBody().getWind().getSpeed()
-                            );
+                            weatherForPositionResponse.getBody().getMain().getTemp(),
+                            weatherForPositionResponse.getBody().getWind().getSpeed(),
+                            weather.getDescription(),
+                            weather.getIcon()
+
+                    );
                 }).collect(Collectors.toList());
 
         log.info(collect.toString());

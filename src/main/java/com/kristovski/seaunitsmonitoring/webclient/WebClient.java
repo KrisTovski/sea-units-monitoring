@@ -63,9 +63,7 @@ public class WebClient {
     }
 
     public ResponseEntity<WeatherConditions> getWeatherForPosition(double lat, double lon) {
-//        callGetMethod("weather?lat={lat}&lon={lon}&appid={API key}&units=metric&lang=pl",
-//                WeatherConditions.class,
-//                lat, lon, API_KEY);
+
         return restTemplate.exchange(
                 WEATHER_URL + "weather?lat={lat}&lon={lon}&appid={API key}&units=metric&lang=pl",
                 HttpMethod.GET,
@@ -73,11 +71,6 @@ public class WebClient {
                 WeatherConditions.class,
                 lat, lon, OPENWEATHER_API_KEY);
     }
-
-//    private <T> T callGetMethod(String url, Class<T> responseType, Object... objects) {
-//        return restTemplate.getForObject(WEATHER_URL + url,
-//                responseType, objects);
-//    }
 
     private HttpHeaders getHttpHeadersForAutorization() {
         HttpHeaders httpHeaders = new HttpHeaders();

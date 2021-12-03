@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sea Units Monitoring</title>
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
@@ -11,26 +12,51 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
 
 </head>
 <body>
+<nav class="navbar">
+    <a href="#" th:href="@{/app}" class="logo" alt="logo">
+        <i class="fas fa-ship"></i>
 
-<div id="map"></div>
-<form th:action="@{/app}" th:method="Get">
-    Choose Unit Track
-    <select name="unitType">
-        <option th:each="typeOption : ${T(com.kristovski.seaunitsmonitoring.seaunits.UnitType).values()}"
-                th:value="${typeOption.value}"
-                th:text="${typeOption.valueName}"></option>
+    </a>
+    Sea Unit Monitoring
+</nav>
+<div class="container">
+    <div>
+        <form th:action="@{/app}" th:method="Get">
+            Choose Unit Track
+            <select name="unitType">
+                <option th:each="typeOption : ${T(com.kristovski.seaunitsmonitoring.seaunits.UnitType).values()}"
+                        th:value="${typeOption.value}"
+                        th:text="${typeOption.valueName}"></option>
 
-    </select>
-    <button type="submit">Submit</button>
-</form>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="map"></div>
+</div>
+
 
 <script th:inline="javascript">
     var map = L.map('map').setView([63.285, 9.872], 8);
+
+    var LeafIcon = L.Icon.extend({
+        options: {
+            iconSize: [32, 32],
+            shadowSize: [0, 0],
+            iconAnchor: [16, 32],
+            shadowAnchor: [0, 0],
+            popupAnchor: [16, -16]
+        }
+    });
+
+    var vikiingShip = new LeafIcon({
+        iconUrl: 'https://img.icons8.com/color/100/000000/viking-ship.png'
+    })
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -40,19 +66,26 @@
 
     seaUnits.forEach(value => {
 
-        var polygon;
+        var polyline;
 
-        L.marker([value.x, value.y]).addTo(map)
-            .bindPopup(value.name)
+        L.marker([value.x, value.y], {
+            icon: vikiingShip,
+            title: value.name + " " + value.mmsi,
+        }).addTo(map)
+            .bindPopup(
+                value.name + " mmsi: " + value.mmsi +"<br>"+
+                "<br>Weather conditions: <br>" +
+                "wind speed: " + value.windSpeed + "m/s"
+            )
             .openPopup()
             .on('mouseover', () => {
-                polygon = L.polygon([
+                polyline = L.polyline([
                     [value.x, value.y],
                     [value.destinationX, value.destinationY]
                 ]).addTo(map);
             })
             .on('mouseout', () => {
-                map.removeLayer(polygon)
+                map.removeLayer(polyline)
             })
 
         ;
