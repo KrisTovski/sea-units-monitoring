@@ -1,10 +1,7 @@
-package com.kristovski.seaunitsmonitoring.webclient;
+package com.kristovski.seaunitsmonitoring.model.seaunit;
 
-import com.kristovski.seaunitsmonitoring.openweather.model.Weather;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
 
 @AllArgsConstructor
 @Data

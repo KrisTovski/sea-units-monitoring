@@ -1,7 +1,8 @@
 
-package com.kristovski.seaunitsmonitoring.openweather.model;
+package com.kristovski.seaunitsmonitoring.model.seaunit;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -13,24 +14,37 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "all"
+    "type",
+    "coordinates"
 })
 @Generated("jsonschema2pojo")
-public class Clouds {
+public class Geometry {
 
-    @JsonProperty("all")
-    private Integer all;
+    @JsonProperty("type")
+    private String type;
+    @JsonProperty("coordinates")
+    private List<Double> coordinates = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("all")
-    public Integer getAll() {
-        return all;
+    @JsonProperty("type")
+    public String getType() {
+        return type;
     }
 
-    @JsonProperty("all")
-    public void setAll(Integer all) {
-        this.all = all;
+    @JsonProperty("type")
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @JsonProperty("coordinates")
+    public List<Double> getCoordinates() {
+        return coordinates;
+    }
+
+    @JsonProperty("coordinates")
+    public void setCoordinates(List<Double> coordinates) {
+        this.coordinates = coordinates;
     }
 
     @JsonAnyGetter

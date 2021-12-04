@@ -1,5 +1,5 @@
 
-package com.kristovski.seaunitsmonitoring.openweather.model;
+package com.kristovski.seaunitsmonitoring.model.openweather;
 
 import java.util.HashMap;
 import java.util.List;

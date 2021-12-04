@@ -1,5 +1,5 @@
 
-package com.kristovski.seaunitsmonitoring.seaunits;
+package com.kristovski.seaunitsmonitoring.model.seaunit;
 
 import java.util.HashMap;
 import java.util.Map;

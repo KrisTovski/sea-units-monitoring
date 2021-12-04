@@ -1,4 +1,4 @@
-package com.kristovski.seaunitsmonitoring.webclient;
+package com.kristovski.seaunitsmonitoring.model.token;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

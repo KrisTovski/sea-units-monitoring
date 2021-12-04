@@ -1,19 +1,23 @@
-package com.kristovski.seaunitsmonitoring.seaunits;
+package com.kristovski.seaunitsmonitoring.service;
 
-import com.kristovski.seaunitsmonitoring.openweather.model.Weather;
-import com.kristovski.seaunitsmonitoring.openweather.model.WeatherConditions;
-import com.kristovski.seaunitsmonitoring.webclient.SeaUnitPoint;
+import com.kristovski.seaunitsmonitoring.model.dto.SeaUnitDto;
+import com.kristovski.seaunitsmonitoring.model.openweather.Weather;
+import com.kristovski.seaunitsmonitoring.model.openweather.WeatherConditions;
+import com.kristovski.seaunitsmonitoring.model.seaunit.SeaUnit;
+import com.kristovski.seaunitsmonitoring.model.seaunit.SeaUnitPoint;
+import com.kristovski.seaunitsmonitoring.repository.SeaUnitRepository;
 import com.kristovski.seaunitsmonitoring.webclient.WebClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.kristovski.seaunitsmonitoring.model.mapper.SeaUnitDtoMapper.mapPointToDto;
 
 @Service
 @Slf4j
@@ -21,6 +25,7 @@ import java.util.stream.Stream;
 public class SeaUnitService {
 
     private final WebClient webClient;
+    private final SeaUnitRepository repository;
 
     private static final double X_MIN = 7.50;
     private static final double X_MAX = 11.50;
@@ -47,6 +52,11 @@ public class SeaUnitService {
         log.info("Get Sea Units By Type: " + collect);
         return collect;
     }
+
+    public void saveDto(List<SeaUnitPoint> points) {
+        repository.saveAll(mapPointToDto(points));
+    }
+
 
     private SeaUnitPoint apply(SeaUnit seaUnit) {
         Double lat = seaUnit.getGeometry().getCoordinates().get(0);

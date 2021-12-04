@@ -1,9 +1,12 @@
 package com.kristovski.seaunitsmonitoring.webclient;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.kristovski.seaunitsmonitoring.openweather.model.WeatherConditions;
-import com.kristovski.seaunitsmonitoring.seaunits.Datum;
-import com.kristovski.seaunitsmonitoring.seaunits.SeaUnit;
+import com.kristovski.seaunitsmonitoring.model.openweather.WeatherConditions;
+import com.kristovski.seaunitsmonitoring.model.seaunit.Datum;
+import com.kristovski.seaunitsmonitoring.model.seaunit.SeaUnit;
+import com.kristovski.seaunitsmonitoring.model.token.BarentswatchResponse;
+import com.kristovski.seaunitsmonitoring.model.token.Token;
+import com.kristovski.seaunitsmonitoring.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -38,7 +41,8 @@ public class WebClient {
     RestTemplate restTemplate = new RestTemplate();
 
     public ResponseEntity<SeaUnit[]> getSeaUnitsForGivenAreaWithDestination(double xmin, double xmax, double ymin, double ymax) {
-        HttpHeaders httpHeaders = getHttpHeadersForAutorization();
+
+            HttpHeaders httpHeaders = getHttpHeadersForAutorization();
 
         return restTemplate.exchange(
                 BARENTSWATCH_URL + "Xmin={xmin}&Xmax={xmax}&Ymin={ymin}&Ymax={ymax}",

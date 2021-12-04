@@ -1,5 +1,5 @@
 
-package com.kristovski.seaunitsmonitoring.openweather.model;
+package com.kristovski.seaunitsmonitoring.model.openweather;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,37 +13,50 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "lon",
-    "lat"
+    "speed",
+    "deg",
+    "gust"
 })
 @Generated("jsonschema2pojo")
-public class Coord {
+public class Wind {
 
-    @JsonProperty("lon")
-    private Double lon;
-    @JsonProperty("lat")
-    private Double lat;
+    @JsonProperty("speed")
+    private Double speed;
+    @JsonProperty("deg")
+    private Integer deg;
+    @JsonProperty("gust")
+    private Double gust;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("lon")
-    public Double getLon() {
-        return lon;
+    @JsonProperty("speed")
+    public Double getSpeed() {
+        return speed;
     }
 
-    @JsonProperty("lon")
-    public void setLon(Double lon) {
-        this.lon = lon;
+    @JsonProperty("speed")
+    public void setSpeed(Double speed) {
+        this.speed = speed;
     }
 
-    @JsonProperty("lat")
-    public Double getLat() {
-        return lat;
+    @JsonProperty("deg")
+    public Integer getDeg() {
+        return deg;
     }
 
-    @JsonProperty("lat")
-    public void setLat(Double lat) {
-        this.lat = lat;
+    @JsonProperty("deg")
+    public void setDeg(Integer deg) {
+        this.deg = deg;
+    }
+
+    @JsonProperty("gust")
+    public Double getGust() {
+        return gust;
+    }
+
+    @JsonProperty("gust")
+    public void setGust(Double gust) {
+        this.gust = gust;
     }
 
     @JsonAnyGetter
