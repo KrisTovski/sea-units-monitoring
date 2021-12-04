@@ -7,6 +7,7 @@ import com.kristovski.seaunitsmonitoring.model.seaunit.SeaUnit;
 import com.kristovski.seaunitsmonitoring.model.token.BarentswatchResponse;
 import com.kristovski.seaunitsmonitoring.model.token.Token;
 import com.kristovski.seaunitsmonitoring.repository.TokenRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,10 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class WebClient {
     private static final String BARENTSWATCH_URL = "https://www.barentswatch.no/bwapi/v2/geodata/ais/openpositions?";
     private static final String POSITIONSTACK_URL = "http://api.positionstack.com/v1/forward?access_key=";
@@ -42,7 +45,7 @@ public class WebClient {
 
     public ResponseEntity<SeaUnit[]> getSeaUnitsForGivenAreaWithDestination(double xmin, double xmax, double ymin, double ymax) {
 
-            HttpHeaders httpHeaders = getHttpHeadersForAutorization();
+        HttpHeaders httpHeaders = getHttpHeadersForAutorization();
 
         return restTemplate.exchange(
                 BARENTSWATCH_URL + "Xmin={xmin}&Xmax={xmax}&Ymin={ymin}&Ymax={ymax}",
@@ -78,11 +81,13 @@ public class WebClient {
     private HttpHeaders getHttpHeadersForAutorization() {
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        String barentswatch_api_key = getLatestToken().getAccessToken();
+        Token token = getLatestToken();
+
+        String barentswatch_api_key = token.getAccessToken();
 
         if (barentswatch_api_key == null) {
             addToken(new Token());
-        } else if (isTokenExpired()) {
+        } else if (isTokenExpired(token)) {
             addToken(new Token());
         } else {
             callPostForAccessToken();
@@ -111,24 +116,25 @@ public class WebClient {
 
         BarentswatchResponse barentswatchResponse = restTemplate.postForObject("https://id.barentswatch.no/connect/token", httpEntity, BarentswatchResponse.class);
 
+        assert barentswatchResponse != null;
+
         return barentswatchResponse.getAccess_token();
     }
 
-    private boolean isTokenExpired() {
-        Token lastToken = getLatestToken();
-        LocalDateTime tokenCreateTime = lastToken.getCreateTime();
+    private boolean isTokenExpired(Token token) {
+        LocalDateTime tokenCreateTime = token.getCreateTime();
         LocalDateTime currentTime = LocalDateTime.now();
 
-        if (lastToken == null || tokenCreateTime.isBefore(currentTime.minusHours(1))) {
-            return true;
-        }
-        return false;
+        return tokenCreateTime.isBefore(currentTime.minusHours(1));
     }
 
     private Token getLatestToken() {
         List<Token> tokens = tokenRepository.findAll();
+        log.info("findAll tokens from db - ids: " + tokens.stream().map(Token::getId).collect(Collectors.toList()));
         if (!tokens.isEmpty()) {
-            return tokens.stream().max(Comparator.comparingLong(Token::getId)).orElseThrow(NoSuchElementException::new);
+            Token token = tokens.stream().max(Comparator.comparingLong(Token::getId)).orElseThrow(NoSuchElementException::new);
+            log.info("Latest token: " + token.toString());
+            return token;
         }
         return new Token();
     }
