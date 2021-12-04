@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 @Slf4j
 public class MapController {
 
-    private static final int MILITARY_UNITS_TYPE = 35;
     private final SeaUnitService seaUnitService;
+
 
     @Autowired
     public MapController(SeaUnitService seaUnitService) {
@@ -36,12 +36,8 @@ public class MapController {
 
         if (isNumeric(value)) {
             List<SeaUnitPoint> seaUnitsByType = seaUnitService.getSeaUnitsByType(Integer.parseInt(value));
-
             model.addAttribute("seaUnits", seaUnitsByType);
-            // Save only military units to db
-            if (isMilitary(value)) {
-                seaUnitService.saveDto(seaUnitsByType);
-            }
+
         } else {
             // Commented out because
             // it takes a long time to load all units from api
@@ -53,9 +49,7 @@ public class MapController {
         return "map";
     }
 
-    private boolean isMilitary(String value) {
-        return Integer.parseInt(value) == MILITARY_UNITS_TYPE;
-    }
+
 
     private boolean isNumeric(String s) {
         Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");

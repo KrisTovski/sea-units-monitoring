@@ -1,6 +1,7 @@
 package com.kristovski.seaunitsmonitoring.service;
 
-import com.kristovski.seaunitsmonitoring.model.dto.SeaUnitDto;
+import com.kristovski.seaunitsmonitoring.email.EmailSender;
+import com.kristovski.seaunitsmonitoring.email.EmailTemplate;
 import com.kristovski.seaunitsmonitoring.model.openweather.Weather;
 import com.kristovski.seaunitsmonitoring.model.openweather.WeatherConditions;
 import com.kristovski.seaunitsmonitoring.model.seaunit.SeaUnit;
@@ -24,13 +25,20 @@ import static com.kristovski.seaunitsmonitoring.model.mapper.SeaUnitDtoMapper.ma
 @AllArgsConstructor
 public class SeaUnitService {
 
+    private static final double TRONDHEIM_Y = 63.446827;
+    private static final double TRONDHEIM_X = 10.421906;
+    private static final int MILITARY_UNITS_TYPE = 35;
+    private static final int DISTANCE_FROM_TRONDHEIM = 100;
     private final WebClient webClient;
     private final SeaUnitRepository repository;
+    private final EmailSender emailSender;
 
     private static final double X_MIN = 7.50;
     private static final double X_MAX = 11.50;
     private static final double Y_MIN = 63.10;
     private static final double Y_MAX = 64.10;
+
+
 
     public List<SeaUnitPoint> getSeaUnits() {
         ResponseEntity<SeaUnit[]> response = webClient.getSeaUnitsForGivenAreaWithDestination(X_MIN, X_MAX, Y_MIN, Y_MAX);
@@ -48,12 +56,37 @@ public class SeaUnitService {
         List<SeaUnitPoint> collect = Stream.of(Objects.requireNonNull(response.getBody()))
                 .filter(seaUnit -> seaUnit.getShipType().equals(unitType))
                 .map(this::apply).collect(Collectors.toList());
+        // Save only military units to db
+        if (isMilitary(unitType)) {
+            saveDto(collect);
+            sendEmailIfMilitaryUnitCloseToTrondheim(collect);
+        }
 
         log.info("Get Sea Units By Type: " + collect);
         return collect;
     }
 
-    public void saveDto(List<SeaUnitPoint> points) {
+    private void sendEmailIfMilitaryUnitCloseToTrondheim(List<SeaUnitPoint> collect) {
+        for (SeaUnitPoint militaryUnit : collect) {
+            double y = militaryUnit.getY();
+            double x = militaryUnit.getX();
+
+            double powX = Math.pow((x - TRONDHEIM_X), 2);
+            double powY = Math.pow((y - TRONDHEIM_Y), 2);
+            double distance = Math.sqrt(powX + powY);
+            log.info(militaryUnit.getName() + " is " + distance + "km from Trondheim");
+
+            if (distance <= DISTANCE_FROM_TRONDHEIM) {
+                emailSender.send("kristovski.dev@gmail.com", buildEmail());
+            }
+        }
+    }
+
+    private boolean isMilitary(int value) {
+        return value == MILITARY_UNITS_TYPE;
+    }
+
+    private void saveDto(List<SeaUnitPoint> points) {
         repository.saveAll(mapPointToDto(points));
     }
 
@@ -77,5 +110,9 @@ public class SeaUnitService {
                 weather.getDescription(),
                 weather.getIcon()
         );
+    }
+
+    private String buildEmail() {
+        return new EmailTemplate().getEmailTemplate();
     }
 }
