@@ -78,7 +78,9 @@ public class SeaUnitService {
             log.info(militaryUnit.getName() + " is " + distance + "km from Trondheim");
 
             if (distance <= DISTANCE_FROM_TRONDHEIM) {
-                emailSender.send("kristovski.dev@gmail.com", buildEmail());
+                // temporary disabled due to Google restriction
+                //   emailSender.send("kristovski.dev@gmail.com", buildEmail());
+                log.info("Fake email send");
             }
         }
     }
