@@ -14,7 +14,7 @@
     <name>sea-units-monitoring</name>
     <description>sea-units-monitoring</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <jasypt.version>3.0.4</jasypt.version>
         <liquibase.version>4.6.1</liquibase.version>
     </properties>
@@ -64,10 +64,12 @@
     </dependencies>
 
     <build>
+        <finalName>sea-units-monitoring</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>
