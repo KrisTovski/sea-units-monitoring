@@ -34,7 +34,7 @@ Korzystając z podwalin aplikacji, którą Przemek stworzył w czasie swojego li
    - Zamieniłem standardowe znaczniki na łodzie wikingów ;)
 6. Wyświelanie linii do punktu docelowego.
    - funkcjonalność dodana przez Przemysława Bykowskiego
-   - uwaga, ze wzlgędu na wykorzystany miesięczny limit połączenia do positionstack aktualnie dane nie sa pobierany i każdy statek wskazuje pozycje 0,0.
+   - uwaga, ze wzlgędu na wykorzystany miesięczny limit połączenia do positionstack aktualnie dane nie sa pobierane i każdy statek wskazuje pozycje 0,0.
 
 ## Technologie
 * Java 11
@@ -62,6 +62,13 @@ https://sea-units-monitoring.herokuapp.com/app
 Aplikacja została umieszczona na heroku. Niestety ze względu na to, że jest to darmowy plan,
 połączenie często trwa dosyć długo. 
 Może wystepować też problem z maksymalną ilością połączeń do bazy danych (przy pobieraniu tokena oraz przy wyświetlaniu jednostek militarnych :( )
+
+Edit:
+Znalazłem przyczynę wyrzucania błędu 500, przy wyborze jednostek militarnych:
+Google zablokowało tymczasowo maila (tak się dzieje gdy podejrzewają o spam...)
+```"org.springframework.mail.MailSendException: Failed messages: com.sun.mail.smtp.SMTPSendFailedException: 550 5.4.5 Daily user sending quota exceeded."```
+Przepraszam testujących aplikację. Rozwiązanie to albo podmienić na inny adres mailowy albo poczekać 24h lub wyłączyć wysyłanie maili przez aplikację.
+Tymczasowo przychylam się trzeciemu rozwiązaniu.
 
 ## Docker Image
 Aplikację można także pobrać z mojego DockerHuba.
