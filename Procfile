@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar target/sea-units-monitoring.jar
+web: java $JAVA_OPTS -Dspring.profiles.active=prod -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar target/sea-units-monitoring.jar
