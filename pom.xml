@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kristovski</groupId>
-    <artifactId>monitorowanie-jednostek-morskich</artifactId>
+    <artifactId>sea-units-monitoring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sea-units-monitoring</name>
     <description>sea-units-monitoring</description>
@@ -106,5 +106,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
