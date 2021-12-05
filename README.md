@@ -52,7 +52,7 @@ Korzystając z podwalin aplikacji, którą Przemek stworzył w czasie swojego li
 * CSS
 * JS
 * Lombok
-* CircleCi
+* CircleCi CI/CD
 * Heroku
 * Cleardb
 
