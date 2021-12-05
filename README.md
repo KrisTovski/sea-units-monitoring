@@ -60,7 +60,8 @@ Korzystając z podwalin aplikacji, którą Przemek stworzył w czasie swojego li
 https://sea-units-monitoring.herokuapp.com/app
 
 Aplikacja została umieszczona na heroku. Niestety ze względu na to, że jest to darmowy plan,
-połączenie często trwa dosyć długo. Występuje też problem z maksymalną ilością połączeń do bazy danych :(
+połączenie często trwa dosyć długo. 
+Może wystepować też problem z maksymalną ilością połączeń do bazy danych (przy pobieraniu tokena oraz przy wyświetlaniu jednostek militarnych :( )
 
 ## Docker Image
 Aplikację można także pobrać z mojego DockerHuba.
