@@ -76,6 +76,8 @@ docker pull -a kristovski/sea-units-monitoring
 docker run -d -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=dev" kristovski/sea-units-monitoring:latest
 ```
 
+**localhost:8080/app**
+
 ## Screenshots
 
 Wygląd główny:
