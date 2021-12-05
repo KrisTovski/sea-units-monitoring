@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Djasypt.plugin.path=file:src/main/resources/liquibase.properties -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar target/sea-units-monitoring.jar
+web: java $JAVA_OPTS -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar target/sea-units-monitoring.jar
