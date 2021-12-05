@@ -65,8 +65,6 @@ Może wystepować też problem z maksymalną ilością połączeń do bazy danyc
 
 ## Docker Image
 Aplikację można także pobrać z mojego DockerHuba.
-W ten sposób uruchomimy wersj, kóra działa na bazie H2, więc nie łączy się z bazą produkcyjną
-ClearDb na Heroku.
 Przetestowałem lolaknie ale w razie problemów z uruchomieniem proszę o kontakt. 
 
 ```
