@@ -67,8 +67,8 @@ Edit:
 Znalazłem przyczynę wyrzucania błędu 500, przy wyborze jednostek militarnych:
 Google zablokowało tymczasowo maila (tak się dzieje gdy podejrzewają o spam...)
 ```"org.springframework.mail.MailSendException: Failed messages: com.sun.mail.smtp.SMTPSendFailedException: 550 5.4.5 Daily user sending quota exceeded."```
-Przepraszam testujących aplikację. Rozwiązanie to albo podmienić na inny adres mailowy albo poczekać 24h lub wyłączyć wysyłanie maili przez aplikację.
-Tymczasowo przychylam się trzeciemu rozwiązaniu.
+Przepraszam testujących aplikację. Rozwiązania problemu: inny adres mailowy, poczekać 24h lub wyłączyć wysyłanie maili przez aplikację.
+Tymczasowo przychylam się ku trzeciemu rozwiązaniu.
 
 ## Docker Image
 Aplikację można także pobrać z mojego DockerHuba.
