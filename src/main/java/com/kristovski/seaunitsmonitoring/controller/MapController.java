@@ -25,7 +25,7 @@ public class MapController {
         this.seaUnitService = seaUnitService;
     }
 
-    @GetMapping(value = {"/app", "/app?unitType={value}"})
+    @GetMapping(value = {"app", "app?unitType={value}"})
     public String getMap(@RequestParam(required = false) Map<String, String> params, Model model) {
 
         String value = params.entrySet().stream()
