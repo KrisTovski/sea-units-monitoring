@@ -23,4 +23,4 @@ FROM ${RUNTIME_IMAGE}
 WORKDIR /app
 COPY --from=build /build/target/sea-units-monitoring.jar /app/sea-units-monitoring.jar
 
-ENTRYPOINT ["sh", "-c", "java -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar /app/sea-units-monitoring.jar"]
+ENTRYPOINT ["sh", "-c", "java -Djasypt.plugin.path=file:src/main/resources/liquibase.properties -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar /app/sea-units-monitoring.jar"]
