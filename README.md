@@ -1,4 +1,4 @@
-#Sea Units Monitoring
+# Sea Units Monitoring
 
 [![CircleCI](https://circleci.com/gh/KrisTovski/sea-units-monitoring/tree/master.svg?style=svg)](https://circleci.com/gh/KrisTovski/sea-units-monitoring/tree/master)
 
@@ -54,6 +54,7 @@ Korzystając z podwalin aplikacji, którą Przemek stworzył w czasie swojego li
 * Lombok
 * CircleCi
 * Heroku
+* Cleardb
 
 ## Demo aplikacji
 https://sea-units-monitoring.herokuapp.com/app
@@ -76,12 +77,17 @@ docker run -d -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=dev" kristovski/sea-units-
 
 ## Screenshots
 
+Wygląd główny:
 ![](images/seaunitsmonitoring0.png)
-Wybieranie typu jednostki
+
+Wybieranie typu jednostki:
 ![](images/seaunitsmonitoring1.jpg)
-Wyświetlanie informacji o statku, położeniu, warunkach pogodowych
+
+Wyświetlanie informacji o statku, położeniu, warunkach pogodowych:
 ![](images/seaunitsmonitoring2.png)
-Przychodzące maile
+
+Przychodzące maile:
 ![](images/seaunitsmonitoring3.png)
-Mail z ostrzeżeniem 
+
+Mail z ostrzeżeniem: 
 ![](images/seaunitsmonitoring4.png)
