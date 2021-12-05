@@ -1,7 +1,7 @@
 package com.kristovski.seaunitsmonitoring.service;
 
-import com.kristovski.seaunitsmonitoring.email.EmailSender;
-import com.kristovski.seaunitsmonitoring.email.EmailTemplate;
+import com.kristovski.seaunitsmonitoring.utils.email.EmailSender;
+import com.kristovski.seaunitsmonitoring.utils.email.EmailTemplate;
 import com.kristovski.seaunitsmonitoring.model.openweather.Weather;
 import com.kristovski.seaunitsmonitoring.model.openweather.WeatherConditions;
 import com.kristovski.seaunitsmonitoring.model.seaunit.SeaUnit;
@@ -38,24 +38,13 @@ public class SeaUnitService {
     private static final double Y_MIN = 63.10;
     private static final double Y_MAX = 64.10;
 
-
-
-    public List<SeaUnitPoint> getSeaUnits() {
-        ResponseEntity<SeaUnit[]> response = webClient.getSeaUnitsForGivenAreaWithDestination(X_MIN, X_MAX, Y_MIN, Y_MAX);
-
-        List<SeaUnitPoint> collect = Stream.of(Objects.requireNonNull(response.getBody()))
-                .map(this::apply).collect(Collectors.toList());
-
-        log.info("Get Sea Units: " + collect);
-        return collect;
-    }
-
     public List<SeaUnitPoint> getSeaUnitsByType(int unitType) {
         ResponseEntity<SeaUnit[]> response = webClient.getSeaUnitsForGivenAreaWithDestination(X_MIN, X_MAX, Y_MIN, Y_MAX);
 
         List<SeaUnitPoint> collect = Stream.of(Objects.requireNonNull(response.getBody()))
                 .filter(seaUnit -> seaUnit.getShipType().equals(unitType))
                 .map(this::apply).collect(Collectors.toList());
+
         // Save only military units to db
         if (isMilitary(unitType)) {
             saveDto(collect);
@@ -63,6 +52,18 @@ public class SeaUnitService {
         }
 
         log.info("Get Sea Units By Type: " + collect);
+        return collect;
+    }
+
+    // Don't delete this method
+    // Method is inactive when "show all units" in getMap() is commented out in controller
+    public List<SeaUnitPoint> getSeaUnits() {
+        ResponseEntity<SeaUnit[]> response = webClient.getSeaUnitsForGivenAreaWithDestination(X_MIN, X_MAX, Y_MIN, Y_MAX);
+
+        List<SeaUnitPoint> collect = Stream.of(Objects.requireNonNull(response.getBody()))
+                .map(this::apply).collect(Collectors.toList());
+
+        log.info("Get Sea Units: " + collect);
         return collect;
     }
 
@@ -105,11 +106,16 @@ public class SeaUnitService {
                 seaUnit.getShipType(),
                 webClient.getDestination(seaUnit.getDestination()).getLongitude(),
                 webClient.getDestination(seaUnit.getDestination()).getLatitude(),
-                weatherForPositionResponse.getBody().getMain().getTemp(),
+                farenheitToCelcius(weatherForPositionResponse.getBody().getMain().getTemp()),
                 weatherForPositionResponse.getBody().getWind().getSpeed(),
                 weather.getDescription(),
                 weather.getIcon()
         );
+    }
+
+    private Double farenheitToCelcius(Double temp) {
+        double result = (temp - 32) * 5 / 9;
+        return Math.round(result * 100.0) / 100.0;
     }
 
     private String buildEmail() {

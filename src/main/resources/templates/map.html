@@ -88,9 +88,14 @@
             title: value.name + " " + value.mmsi,
         }).addTo(map)
             .bindPopup(
-                value.name + " mmsi: " + value.mmsi + "<br>" +
-                "<br>Weather conditions:" +
-                "<br>Temp: " + value.temp + "℉" +
+                value.name + " mmsi: " + value.mmsi +
+                "<hr>" +
+                "Localisation: " +
+                "<br>Latitude: " + value.x +
+                "<br>Longitude: " + value.y +
+                "<hr>" +
+                "Weather conditions:" +
+                "<br>Temp: " + value.temp + "°C" +
                 "<br>Wind speed: " + value.windSpeed + "m/s" +
                 "<br>" + value.description +
                 "<br><img src='http://openweathermap.org/img/wn/" + value.icon + ".png'>"

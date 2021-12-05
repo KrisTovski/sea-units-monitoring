@@ -1,4 +1,4 @@
-package com.kristovski.seaunitsmonitoring.email;
+package com.kristovski.seaunitsmonitoring.utils.email;
 
 import lombok.Getter;
 

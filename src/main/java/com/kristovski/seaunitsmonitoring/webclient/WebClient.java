@@ -46,7 +46,6 @@ public class WebClient {
     public ResponseEntity<SeaUnit[]> getSeaUnitsForGivenAreaWithDestination(double xmin, double xmax, double ymin, double ymax) {
 
         HttpHeaders httpHeaders = getHttpHeadersForAutorization();
-
         return restTemplate.exchange(
                 BARENTSWATCH_URL + "Xmin={xmin}&Xmax={xmax}&Ymin={ymin}&Ymax={ymax}",
                 HttpMethod.GET,
@@ -70,12 +69,13 @@ public class WebClient {
 
     public ResponseEntity<WeatherConditions> getWeatherForPosition(double lat, double lon) {
 
+        String url = WEATHER_URL + "weather?lat={lat}&lon={lon}&appid=" + OPENWEATHER_API_KEY + "&units=metric&lang=en";
         return restTemplate.exchange(
-                WEATHER_URL + "weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units=metric&lang=en",
+                url,
                 HttpMethod.GET,
                 new HttpEntity<>(new HttpHeaders()),
                 WeatherConditions.class,
-                lat, lon, OPENWEATHER_API_KEY);
+                lat, lon);
     }
 
     private HttpHeaders getHttpHeadersForAutorization() {
