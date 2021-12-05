@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -Djasypt.encryptor.password=Dev -Dserver.port=$PORT -jar target/sea-units-monitoring.jar
