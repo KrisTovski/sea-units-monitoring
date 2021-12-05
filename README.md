@@ -78,7 +78,7 @@ Przetestowałem lolaknie ale w razie problemów z uruchomieniem proszę o kontak
 docker pull -a kristovski/sea-units-monitoring
 ```
 ```
-docker run -d -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=dev" kristovski/sea-units-monitoring:latest
+docker run -d -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=prod" kristovski/sea-units-monitoring:latest
 ```
 
 ```localhost:8080/app```
