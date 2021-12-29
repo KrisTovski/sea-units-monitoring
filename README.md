@@ -4,16 +4,19 @@
 
 
 ## Informacje ogólne
+
 Aplikacja ta powstała z jednej strony w celach edukacyjnych,
 a z drugiej (a może przed wszytkim) na potrzeby **konkursu** zorganizowanego przez **Przemysława Bykowskiego** 
 oraz **Ośrodek Badawczo-Rozwojowy Centrum Techniki Morskiej S.A.**:
 https://bykowski.pl/wez-udzial-w-konkursie-programistycznym-monitorowanie-jednostek-morskich/
+
 -----
+
 **[EDIT]**
-**Aplikacja zykała uznanie jury i zajęła 5 miejsce** :trophy:
+**Aplikacja zyskała uznanie jury i zajęła :trophy: 5 miejsce** 
 https://bykowski.pl/wyniki-konkursu-monitorowanie-jednostek-morskich/
 
-oraz została uhonorowana dodatkową nagrodę społeczności :smiley: https://www.youtube.com/watch?v=zauJmUWArxQ
+Została takżę uhonorowana dodatkową nagrodę społeczności :smiley: https://www.youtube.com/watch?v=zauJmUWArxQ
 
 -----
 
