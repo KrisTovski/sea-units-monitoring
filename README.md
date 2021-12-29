@@ -16,7 +16,7 @@ https://bykowski.pl/wez-udzial-w-konkursie-programistycznym-monitorowanie-jednos
 **Aplikacja zyskała uznanie jury i zajęła :trophy: 5 miejsce** 
 https://bykowski.pl/wyniki-konkursu-monitorowanie-jednostek-morskich/
 
-Została takżę uhonorowana dodatkową nagrodę społeczności :smiley: https://www.youtube.com/watch?v=zauJmUWArxQ
+Została także uhonorowana dodatkową nagrodą społeczności :smiley: https://www.youtube.com/watch?v=zauJmUWArxQ
 
 -----
 
