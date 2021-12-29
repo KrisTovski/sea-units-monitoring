@@ -5,12 +5,28 @@
 
 ## Informacje ogólne
 Aplikacja ta powstała z jednej strony w celach edukacyjnych,
-a z drugiej (a może przed wszytkim) na potrzeby **konkursu** zorganizowanego przez **Przemysława Bykowskiego**:
+a z drugiej (a może przed wszytkim) na potrzeby **konkursu** zorganizowanego przez **Przemysława Bykowskiego** 
+oraz **Ośrodek Badawczo-Rozwojowy Centrum Techniki Morskiej S.A.**:
 https://bykowski.pl/wez-udzial-w-konkursie-programistycznym-monitorowanie-jednostek-morskich/
+-----
+**[EDIT]**
+**Aplikacja zykała uznanie jury i zajęła 5 miejsce** :trophy:
+https://bykowski.pl/wyniki-konkursu-monitorowanie-jednostek-morskich/
+
+oraz została uhonorowana dodatkową nagrodę społeczności :smiley: https://www.youtube.com/watch?v=zauJmUWArxQ
+
+-----
 
 Zadaniem uczesników konkursu było **stworzenie aplikacji do śledzenia jednostek morskich w czasie rzeczywistym**.
 
 _"Wykorzystując dane pobierane z AIS utwórz aplikację, która będzie wyświetlała informacje na temat jednostek morskich na mapie."_
+
+Oceniana była:
+- Jakość kodu (max 10 pkt)
+- Pomysł (max 10 pkt)
+- Wykorzystane technologie (max 10 pkt)
+
+-----
 
 Korzystając z podwalin aplikacji, którą Przemek stworzył w czasie swojego live'a na kanale Youtube
 (https://www.youtube.com/channel/UCjWnQvpQgSRLeDEYQC0ZuLg) rozbudowałem aplikację o następujące funkcjonalności:
@@ -99,3 +115,15 @@ Przychodzące maile:
 
 Mail z ostrzeżeniem: 
 ![](images/seaunitsmonitoring4.png)
+
+-----
+
+<div style="text-align: center;">
+
+You can find me on [![LinkedIn][linkedin-icon]][linkedin-profile]
+
+</div>
+
+[linkedin-icon]: images/linkedin.png
+
+[linkedin-profile]: https://www.linkedin.com/in/krzysztof-filak/
